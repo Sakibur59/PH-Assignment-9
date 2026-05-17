@@ -14,11 +14,11 @@ const Featured = async () => {
             <p className="text-muted">Handpicked car options for your next adventure</p>
          </div>
 
-     <Link href={'/explore-cars'}>    <Button variant="outline" className={'rounded-none border-cyan-500 border-2 text-cyan-500'}>All Cars</Button></Link>
+     <Link href={'/explore-cars'}><Button variant="outline" className={'rounded-none border-cyan-500 border-2 text-cyan-500'}>All Cars</Button></Link>
         </div>
 
 
-        <div className="grid grid-cols-4 gap-5 mt-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 mt-10">
             {cars.map(car => <CarCard key={car._id} car={car}/>)}
         </div>
             

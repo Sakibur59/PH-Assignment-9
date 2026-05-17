@@ -35,7 +35,7 @@ const CarCard = ({ car }) => {
             <div>
               <h2 className="text-xl font-bold">{carName}</h2>
             </div>
-            <p className="text-gray-500 mt-2">{description}</p>
+            <p className="text-gray-500 mt-2 ">{description}</p>
             <div className="flex items-center  mt-2">
               <LuMapPin className="text-gray-500" />
               <span className="text-gray-500 ml-1">{location}</span>

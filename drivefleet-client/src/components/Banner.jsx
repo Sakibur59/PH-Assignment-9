@@ -4,7 +4,7 @@ import { Button } from "@heroui/react";
 import { FaArrowRightLong } from "react-icons/fa6";
 const Banner = () => {
   return (
-    <div className="max-w-7xl mx-auto bg-gray-200 flex items-center justify-around p-30 mt-10 rounded-lg gap-10">
+    <div className="max-w-7xl mx-auto bg-gray-200 flex flex-col lg:flex-row items-center justify-around p-30 mt-10 rounded-lg gap-10">
       <div className="space-y-5">
         <h1 className="text-4xl font-bold text-gray-800">
           DriveFleet Car Rental Platform
