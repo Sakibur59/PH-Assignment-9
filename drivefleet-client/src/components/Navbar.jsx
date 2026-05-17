@@ -17,7 +17,7 @@ const Navbar = () => {
             <Link href="/">Home</Link>
           </li>
           <li className="font-bold hover:text-blue-500 transition-colors duration-300">
-            <Link href="/explore-car">Explore Car</Link>
+            <Link href="/explore-cars">Explore Cars</Link>
           </li>
           <li className="font-bold hover:text-blue-500 transition-colors duration-300">
             <Link href="/add-car">Add Car</Link>
