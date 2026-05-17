@@ -1,11 +1,14 @@
+'use client';
 import { Button } from "@heroui/react";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
-import { LuMap, LuMapPin, LuUsersRound } from "react-icons/lu";
+import { LuMapPin, LuUsersRound } from "react-icons/lu";
 
 
 const CarCard = ({ car }) => {
+
+    
+
   const {
     _id,
     carName,
