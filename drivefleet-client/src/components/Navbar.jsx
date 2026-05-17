@@ -13,16 +13,16 @@ const Navbar = () => {
           <Image src={logo} alt="logo" width={200} height={150}></Image>
         </div>
         <ul className="md:flex justify-between items-center gap-4 text-gray-700">
-          <li className="font-bold">
+          <li className="font-bold hover:text-blue-500 transition-colors duration-300" >
             <Link href="/">Home</Link>
           </li>
-          <li className="font-bold">
+          <li className="font-bold hover:text-blue-500 transition-colors duration-300">
             <Link href="/explore-car">Explore Car</Link>
           </li>
-          <li className="font-bold">
+          <li className="font-bold hover:text-blue-500 transition-colors duration-300">
             <Link href="/add-car">Add Car</Link>
           </li>
-          <li className="font-bold">
+          <li className="font-bold hover:text-blue-500 transition-colors duration-300">
             <Link href="/my-bookings">My Bookings</Link>
           </li>
         </ul>
