@@ -1,6 +1,7 @@
 import { Open_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import { Toaster } from "react-hot-toast";
 
 const openSans = Open_Sans({
   subsets: ["latin"],
@@ -19,7 +20,9 @@ export default function RootLayout({ children }) {
     >
       <body className="min-h-full flex flex-col">
         <Navbar></Navbar>
-        {children}</body>
+        {children}
+        <Toaster></Toaster>
+        </body>
     </html>
   );
 }
