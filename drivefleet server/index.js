@@ -116,7 +116,7 @@ async function run() {
       res.send(result);
     });
 
-    app.get("/featured", async (req, res) => {
+    app.get("/available", async (req, res) => {
       const result = await carsCollection.find().limit(6).toArray();
       res.send(result);
     });
