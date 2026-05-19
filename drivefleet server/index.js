@@ -48,6 +48,18 @@ async function run() {
       }
     });
 
+
+     app.patch("/cars/:id", async (req, res) => {
+      const id = req.params.id;
+      const updatedData = req.body;
+      const result = await carsCollection.updateOne(
+        { _id: new ObjectId(id) },
+        { $set: updatedData },
+      );
+      res.send(result);
+    });
+
+
     app.post("/bookings", async (req, res) => {
       try {
         const bookingData = req.body;
