@@ -67,6 +67,18 @@ async function run() {
       res.json(bookings);
     });
 
+    app.get("/my-added-cars/:email", async (req, res) => {
+  try {
+    const { email } = req.params;
+    const result = await carsCollection
+      .find({ userEmail: email })
+      .toArray();
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
     app.get("/cars/:id", async (req, res) => {
       const id = req.params.id;
       const result = await carsCollection.findOne({
@@ -91,6 +103,15 @@ async function run() {
   try {
     const { bookingId } = req.params;
     const result = await bookingsCollection.deleteOne({ _id: new ObjectId(bookingId) });
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+   app.delete('/my-added-cars/:carId', async (req, res) => {
+  try {
+    const { carId } = req.params;
+    const result = await carsCollection.deleteOne({ _id: new ObjectId(carId) });
     res.json(result);
   } catch (error) {
     res.status(500).json({ message: error.message });
