@@ -1,3 +1,4 @@
+import { BookingCancelAlert } from "@/components/BookingCancelAlert";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import Image from "next/image";
@@ -26,21 +27,21 @@ const MyBookingsPage = async () => {
               height={200}
               width={200}
             />
-            <div>
+            <div className="space-y-2">
               <h1 className="font-bold text-2xl">{booking.carName}</h1>
 
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-gray-500">Booking Date:
                 🗓️{new Date(booking.bookingDate).toLocaleString()}
               </p>
 
               <p>Booking Id: {booking._id}</p>
               <p>Driver Need: {booking.driverNeeded.toUpperCase()}</p>
 
-              <p className="text-3xl font-bold text-cyan-500">
-                ${booking.pricePerDay}
+              <p className="text-xl font-bold text-cyan-500">Price:
+                ${booking.pricePerDay}/Day
               </p>
 
-              
+              <BookingCancelAlert bookingId={booking._id}/>
             </div>
           </div>
         ))}

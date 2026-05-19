@@ -14,7 +14,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="">
+    <nav className="sticky top-0 z-50 bg-white shadow-sm">
       <div className="sm:text-center w-90 md:w-300 mx-auto flex justify-between items-center mt-6">
         <div>
           <Image src={logo} alt="logo" width={200} height={150} />
@@ -73,7 +73,7 @@ const Navbar = () => {
                   <li className="border-t border-gray-100">
                     <button
                       onClick={handleSignOut}
-                      className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50"
+                      className="w-full  px-4 py-2 text-sm text-red-600 hover:bg-red-50"
                     >
                       Logout
                     </button>
