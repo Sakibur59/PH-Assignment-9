@@ -18,34 +18,39 @@ const MyBookingsPage = async () => {
   return (
     <div className="max-w-7xl mx-auto mb-10  p-5 mt-10">
       <h1 className="text-3xl font-bold mb-5">My Bookings</h1>
-      <div className="space-y-5">
-        {bookings.map((booking) => (
-          <div key={booking._id} className="flex gap-5 border p-5 min-w-3xl">
-            <Image
-              src={booking.imageUrl}
-              alt={booking.carName}
-              height={200}
-              width={200}
-            />
-            <div className="space-y-2">
-              <h1 className="font-bold text-2xl">{booking.carName}</h1>
+      {!bookings?.length ? (
+        <p>You have no bookings yet.</p>
+      ) : (
+        <div className="space-y-5">
+          {bookings.map((booking) => (
+            <div key={booking._id} className="flex gap-5 border p-5 min-w-3xl">
+              <Image
+                src={booking.imageUrl}
+                alt={booking.carName}
+                height={200}
+                width={200}
+              />
+              <div className="space-y-2">
+                <h1 className="font-bold text-2xl">{booking.carName}</h1>
 
-              <p className="text-sm text-gray-500">Booking Date:
-                🗓️{new Date(booking.bookingDate).toLocaleString()}
-              </p>
+                <p className="text-sm text-gray-500">
+                  Booking Date: 🗓️
+                  {new Date(booking.bookingDate).toLocaleString()}
+                </p>
 
-              <p>Booking Id: {booking._id}</p>
-              <p>Driver Need: {booking.driverNeeded.toUpperCase()}</p>
+                <p>Booking Id: {booking._id}</p>
+                <p>Driver Need: {booking.driverNeeded.toUpperCase()}</p>
 
-              <p className="text-xl font-bold text-cyan-500">Price:
-                ${booking.pricePerDay}/Day
-              </p>
+                <p className="text-xl font-bold text-cyan-500">
+                  Price: ${booking.pricePerDay}/Day
+                </p>
 
-              <BookingCancelAlert bookingId={booking._id}/>
+                <BookingCancelAlert bookingId={booking._id} />
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

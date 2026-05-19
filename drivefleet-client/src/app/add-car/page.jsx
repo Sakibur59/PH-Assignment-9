@@ -1,4 +1,5 @@
 "use client";
+import { authClient } from "@/lib/auth-client";
 import {
   Button,
   FieldError,
@@ -10,6 +11,7 @@ import {
   ListBox,
   Card,
 } from "@heroui/react";
+import { redirect } from "next/navigation";
 
 import React from "react";
 import toast from "react-hot-toast";
@@ -19,6 +21,7 @@ const AddCarPage = () => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const carData = Object.fromEntries(formData.entries());
+    const { data: sessionData } = await authClient.getSession();
     console.log("Form Data:", carData);
 
     try {
@@ -27,13 +30,18 @@ const AddCarPage = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(carData),
+        body: JSON.stringify({
+          ...carData,
+          userEmail: sessionData?.user?.email,
+        }),
       });
       const data = await res.json();
-      toast.success("Car added successfully! 🚗🎉");
     } catch (error) {
       toast.error("Error adding car. Please try again.");
     }
+
+    toast.success("Car added successfully! 🚗🎉");
+    redirect("/my-added-cars");
   };
 
   return (
@@ -42,7 +50,6 @@ const AddCarPage = () => {
       <Card>
         <form onSubmit={handleSubmit} className="p-10 space-y-8 w-3xl">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            
             {/* Car Name */}
             <TextField name="carName" isRequired>
               <Label>Car Model Name</Label>
@@ -59,7 +66,12 @@ const AddCarPage = () => {
 
             {/* Category */}
             <div>
-              <Select name="category" isRequired className="w-full" placeholder="Select category">
+              <Select
+                name="category"
+                isRequired
+                className="w-full"
+                placeholder="Select category"
+              >
                 <Label>Category</Label>
                 <Select.Trigger className="rounded-2xl">
                   <Select.Value />
@@ -67,11 +79,21 @@ const AddCarPage = () => {
                 </Select.Trigger>
                 <Select.Popover>
                   <ListBox>
-                    <ListBox.Item id="Sedan" textValue="Sedan">Sedan</ListBox.Item>
-                    <ListBox.Item id="SUV" textValue="SUV">SUV</ListBox.Item>
-                    <ListBox.Item id="Hatchback" textValue="Hatchback">Hatchback</ListBox.Item>
-                    <ListBox.Item id="Crossover" textValue="Crossover">Crossover</ListBox.Item>
-                    <ListBox.Item id="Luxury" textValue="Luxury">Luxury</ListBox.Item>
+                    <ListBox.Item id="Sedan" textValue="Sedan">
+                      Sedan
+                    </ListBox.Item>
+                    <ListBox.Item id="SUV" textValue="SUV">
+                      SUV
+                    </ListBox.Item>
+                    <ListBox.Item id="Hatchback" textValue="Hatchback">
+                      Hatchback
+                    </ListBox.Item>
+                    <ListBox.Item id="Crossover" textValue="Crossover">
+                      Crossover
+                    </ListBox.Item>
+                    <ListBox.Item id="Luxury" textValue="Luxury">
+                      Luxury
+                    </ListBox.Item>
                   </ListBox>
                 </Select.Popover>
               </Select>
@@ -86,7 +108,12 @@ const AddCarPage = () => {
 
             {/* Transmission */}
             <div>
-              <Select name="transmission" isRequired className="w-full" placeholder="Select transmission">
+              <Select
+                name="transmission"
+                isRequired
+                className="w-full"
+                placeholder="Select transmission"
+              >
                 <Label>Transmission</Label>
                 <Select.Trigger className="rounded-2xl">
                   <Select.Value />
@@ -94,8 +121,12 @@ const AddCarPage = () => {
                 </Select.Trigger>
                 <Select.Popover>
                   <ListBox>
-                    <ListBox.Item id="Automatic" textValue="Automatic">Automatic</ListBox.Item>
-                    <ListBox.Item id="Manual" textValue="Manual">Manual</ListBox.Item>
+                    <ListBox.Item id="Automatic" textValue="Automatic">
+                      Automatic
+                    </ListBox.Item>
+                    <ListBox.Item id="Manual" textValue="Manual">
+                      Manual
+                    </ListBox.Item>
                   </ListBox>
                 </Select.Popover>
               </Select>
@@ -103,7 +134,12 @@ const AddCarPage = () => {
 
             {/* Fuel Type */}
             <div>
-              <Select name="fuelType" isRequired className="w-full" placeholder="Select fuel type">
+              <Select
+                name="fuelType"
+                isRequired
+                className="w-full"
+                placeholder="Select fuel type"
+              >
                 <Label>Fuel Type</Label>
                 <Select.Trigger className="rounded-2xl">
                   <Select.Value />
@@ -111,10 +147,18 @@ const AddCarPage = () => {
                 </Select.Trigger>
                 <Select.Popover>
                   <ListBox>
-                    <ListBox.Item id="Petrol" textValue="Petrol">Petrol</ListBox.Item>
-                    <ListBox.Item id="Diesel" textValue="Diesel">Diesel</ListBox.Item>
-                    <ListBox.Item id="Electric" textValue="Electric">Electric</ListBox.Item>
-                    <ListBox.Item id="Hybrid" textValue="Hybrid">Hybrid</ListBox.Item>
+                    <ListBox.Item id="Petrol" textValue="Petrol">
+                      Petrol
+                    </ListBox.Item>
+                    <ListBox.Item id="Diesel" textValue="Diesel">
+                      Diesel
+                    </ListBox.Item>
+                    <ListBox.Item id="Electric" textValue="Electric">
+                      Electric
+                    </ListBox.Item>
+                    <ListBox.Item id="Hybrid" textValue="Hybrid">
+                      Hybrid
+                    </ListBox.Item>
                   </ListBox>
                 </Select.Popover>
               </Select>
@@ -136,7 +180,12 @@ const AddCarPage = () => {
 
             {/* Availability */}
             <div className="md:col-span-2">
-              <Select name="availability" isRequired className="w-full" placeholder="Select availability status">
+              <Select
+                name="availability"
+                isRequired
+                className="w-full"
+                placeholder="Select availability status"
+              >
                 <Label>Availability Status</Label>
                 <Select.Trigger className="rounded-2xl">
                   <Select.Value />
@@ -144,9 +193,15 @@ const AddCarPage = () => {
                 </Select.Trigger>
                 <Select.Popover>
                   <ListBox>
-                    <ListBox.Item id="Available" textValue="Available">Available</ListBox.Item>
-                    <ListBox.Item id="Rented" textValue="Rented">Rented</ListBox.Item>
-                    <ListBox.Item id="Maintenance" textValue="Maintenance">Maintenance</ListBox.Item>
+                    <ListBox.Item id="Available" textValue="Available">
+                      Available
+                    </ListBox.Item>
+                    <ListBox.Item id="Rented" textValue="Rented">
+                      Rented
+                    </ListBox.Item>
+                    <ListBox.Item id="Maintenance" textValue="Maintenance">
+                      Maintenance
+                    </ListBox.Item>
                   </ListBox>
                 </Select.Popover>
               </Select>

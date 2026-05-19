@@ -40,7 +40,7 @@ const Navbar = () => {
              
               <div className="w-9 h-9 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold text-sm">
                 {user.image ? (
-                  <img src={user.image} alt={user.name} className="w-9 h-9 rounded-full object-cover" referrerPolicy="no-referrer" />
+                  <Image src={user.image} alt={user.name} width={36} height={36} className="w-9 h-9 rounded-full object-cover" priority  />
                 ) : (
                   user.name?.charAt(0).toUpperCase()
                 )}
