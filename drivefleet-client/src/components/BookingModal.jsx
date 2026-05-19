@@ -95,7 +95,7 @@ export function BookingModal({ car }) {
                   </div>
 
                   <Modal.Footer>
-                    <Button type="submit" slot="close">Book Now</Button>
+                    <Button type="submit" slot="close" >Book Now</Button>
                   </Modal.Footer>
                 </form>
               </Surface>

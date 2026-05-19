@@ -5,14 +5,14 @@ import { LuMapPin, LuUsersRound } from "react-icons/lu";
 
 const CarDetailsPage = async ({ params }) => {
   const { id } = await params;
-  const [carRes, countRes] = await Promise.all([
-    fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/cars/${id}`),
-    fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/bookings-count/${id}`, {
+  const carRes = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/cars/${id}`,
+    {
       cache: "no-store",
-    }),
-  ]);
+    },
+  );
+
   const car = await carRes.json();
-  const { count } = await countRes.json();
   const {
     _id,
     carName,
@@ -24,6 +24,7 @@ const CarDetailsPage = async ({ params }) => {
     description,
     availability,
     seatingCapacity,
+    bookingCount
   } = car;
 
   return (
@@ -64,7 +65,7 @@ const CarDetailsPage = async ({ params }) => {
           <div className="flex items-center gap-2 ">
             <span>🧳</span>
             <span>
-              <strong className="text-black">Total Booked: {count}</strong>
+              <strong className="text-black">Total Booked: {bookingCount || 0}</strong>
             </span>
           </div>
 
