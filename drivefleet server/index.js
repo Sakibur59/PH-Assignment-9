@@ -59,6 +59,16 @@ async function run() {
       }
     });
 
+    app.get("/bookings-count/:carId", async (req, res) => {
+      try {
+        const { carId } = req.params;
+        const count = await bookingsCollection.countDocuments({ carId });
+        res.json({ count });
+      } catch (error) {
+        res.status(500).json({ message: error.message });
+      }
+    });
+
     app.get("/bookings/:email", async (req, res) => {
       const { email } = req.params;
       const bookings = await bookingsCollection
@@ -68,16 +78,16 @@ async function run() {
     });
 
     app.get("/my-added-cars/:email", async (req, res) => {
-  try {
-    const { email } = req.params;
-    const result = await carsCollection
-      .find({ userEmail: email })
-      .toArray();
-    res.json(result);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
+      try {
+        const { email } = req.params;
+        const result = await carsCollection
+          .find({ userEmail: email })
+          .toArray();
+        res.json(result);
+      } catch (error) {
+        res.status(500).json({ message: error.message });
+      }
+    });
 
     app.get("/cars/:id", async (req, res) => {
       const id = req.params.id;
@@ -99,24 +109,28 @@ async function run() {
       res.send(result);
     });
 
-   app.delete('/bookings/:bookingId', async (req, res) => {
-  try {
-    const { bookingId } = req.params;
-    const result = await bookingsCollection.deleteOne({ _id: new ObjectId(bookingId) });
-    res.json(result);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-   app.delete('/my-added-cars/:carId', async (req, res) => {
-  try {
-    const { carId } = req.params;
-    const result = await carsCollection.deleteOne({ _id: new ObjectId(carId) });
-    res.json(result);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
+    app.delete("/bookings/:bookingId", async (req, res) => {
+      try {
+        const { bookingId } = req.params;
+        const result = await bookingsCollection.deleteOne({
+          _id: new ObjectId(bookingId),
+        });
+        res.json(result);
+      } catch (error) {
+        res.status(500).json({ message: error.message });
+      }
+    });
+    app.delete("/my-added-cars/:carId", async (req, res) => {
+      try {
+        const { carId } = req.params;
+        const result = await carsCollection.deleteOne({
+          _id: new ObjectId(carId),
+        });
+        res.json(result);
+      } catch (error) {
+        res.status(500).json({ message: error.message });
+      }
+    });
 
     await client.db("admin").command({ ping: 1 });
     console.log(
