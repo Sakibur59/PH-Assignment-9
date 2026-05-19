@@ -1,3 +1,4 @@
+import { BookingModal } from "@/components/BookingModal";
 import { Button } from "@heroui/react";
 import Image from "next/image";
 import { LuMapPin, LuUsersRound } from "react-icons/lu";
@@ -50,9 +51,9 @@ const CarDetailsPage = async ({ params }) => {
             
             <h2 className="text-xl font-semibold mt-4">${pricePerDay}/Day</h2>
             <p className="text-gray-500 mt-2">Availability: {availability ? "Available" : "Not Available"}</p>
-      <Button variant="primary" className="mt-5 text-white w-full  mx-auto ">
-        Book Now
-        </Button>
+            
+        <BookingModal car={car} />
+      
         </div>
       </div>
     </div>

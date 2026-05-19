@@ -12,6 +12,7 @@ import {
 } from "@heroui/react";
 
 import React from "react";
+import toast from "react-hot-toast";
 
 const AddCarPage = () => {
   const handleSubmit = async (e) => {
@@ -29,9 +30,9 @@ const AddCarPage = () => {
         body: JSON.stringify(carData),
       });
       const data = await res.json();
-      console.log("Car added successfully:", data);
+      toast.success("Car added successfully! 🚗🎉");
     } catch (error) {
-      console.error("Error adding car:", error);
+      toast.error("Error adding car. Please try again.");
     }
   };
 
