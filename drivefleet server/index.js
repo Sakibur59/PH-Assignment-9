@@ -48,8 +48,7 @@ async function run() {
       }
     });
 
-
-     app.patch("/cars/:id", async (req, res) => {
+    app.patch("/cars/:id", async (req, res) => {
       const id = req.params.id;
       const updatedData = req.body;
       const result = await carsCollection.updateOne(
@@ -59,27 +58,32 @@ async function run() {
       res.send(result);
     });
 
-
     app.post("/bookings", async (req, res) => {
       try {
         const bookingData = req.body;
-        bookingData.bookingDate = new Date();
+
         const result = await bookingsCollection.insertOne(bookingData);
-        res.json(result);
+
+        await carsCollection.updateOne(
+          { _id: new ObjectId(bookingData.carId) },
+          { $inc: { bookingCount: 1 } },
+        );
+
+        res.send(result);
       } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).send({ message: error.message });
       }
     });
 
-    app.get("/bookings-count/:carId", async (req, res) => {
-      try {
-        const { carId } = req.params;
-        const count = await bookingsCollection.countDocuments({ carId });
-        res.json({ count });
-      } catch (error) {
-        res.status(500).json({ message: error.message });
-      }
-    });
+    // app.get("/bookings-count/:carId", async (req, res) => {
+    //   try {
+    //     const { carId } = req.params;
+    //     const count = await bookingsCollection.countDocuments({ carId });
+    //     res.json({ count });
+    //   } catch (error) {
+    //     res.status(500).json({ message: error.message });
+    //   }
+    // });
 
     app.get("/bookings/:email", async (req, res) => {
       const { email } = req.params;
@@ -110,10 +114,18 @@ async function run() {
     });
 
     app.post("/cars", async (req, res) => {
-      const carData = req.body;
-      console.log("Received car data:", carData);
-      const result = await carsCollection.insertOne(carData);
-      res.send(result);
+      try {
+        const carData = req.body;
+
+        const result = await carsCollection.insertOne({
+          ...carData,
+          bookingCount: 0,
+        });
+
+        res.send(result);
+      } catch (error) {
+        res.status(500).send({ message: error.message });
+      }
     });
 
     app.get("/available", async (req, res) => {
@@ -121,15 +133,38 @@ async function run() {
       res.send(result);
     });
 
-    app.delete("/bookings/:bookingId", async (req, res) => {
+    app.delete("/bookings/:id", async (req, res) => {
       try {
-        const { bookingId } = req.params;
-        const result = await bookingsCollection.deleteOne({
-          _id: new ObjectId(bookingId),
+        const { id } = req.params;
+
+        const booking = await bookingsCollection.findOne({
+          _id: new ObjectId(id),
         });
-        res.json(result);
+
+        if (!booking) {
+          return res.status(404).send({
+            message: "Booking not found",
+          });
+        }
+
+        const result = await bookingsCollection.deleteOne({
+          _id: new ObjectId(id),
+        });
+
+        await carsCollection.updateOne(
+          { _id: new ObjectId(booking.carId) },
+          {
+            $inc: {
+              bookingCount: -1,
+            },
+          },
+        );
+
+        res.send(result);
       } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).send({
+          message: error.message,
+        });
       }
     });
     app.delete("/my-added-cars/:carId", async (req, res) => {
