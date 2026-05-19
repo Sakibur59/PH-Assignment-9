@@ -23,14 +23,15 @@ export function BookingModal({ car }) {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const bookingData = Object.fromEntries(formData.entries());
-
     const { data: sessionData } = await authClient.getSession();
+
+    const { data: tokenData } = await authClient.token();
 
     const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/bookings`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
-        
+        authorization: `Bearer ${tokenData?.token}`,
       },
       body: JSON.stringify({
         ...bookingData,

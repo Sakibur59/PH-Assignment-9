@@ -9,8 +9,16 @@ const MyAddedCarPage = async () => {
   const session = await auth.api.getSession({ headers: await headers() });
   const email = session?.user?.email;
 
+  const {token}= await auth.api.getToken({
+    headers: await headers(),
+  })
+
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER_URL}/my-added-cars/${email}`,
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/my-added-cars/${email}`,{
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    }
   );
   const cars = await res.json();
 

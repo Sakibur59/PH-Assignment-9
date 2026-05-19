@@ -19,7 +19,7 @@ import toast from "react-hot-toast";
 import { BiEdit } from "react-icons/bi";
 
 export function EditModal({ car }) {
-    const route = useRouter();
+  const route = useRouter();
   const {
     _id,
     imageUrl,
@@ -34,13 +34,14 @@ export function EditModal({ car }) {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const carData = Object.fromEntries(formData.entries());
-
+    const { data: tokenData } = await authClient.token();
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_SERVER_URL}/cars/${_id}`,
       {
         method: "PATCH",
         headers: {
           "content-type": "application/json",
+            authorization: `Bearer ${tokenData?.token}`,
         },
         body: JSON.stringify(carData),
       },
@@ -68,16 +69,13 @@ export function EditModal({ car }) {
               <Surface variant="default">
                 <form onSubmit={onSubmit} className="p-4 space-y-8">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                   
                     <div className="md:col-span-2"></div>
 
-                    
                     <TextField defaultValue={location} name="location">
                       <Label>Location</Label>
                       <Input placeholder="Meherpur" className="rounded-2xl" />
                       <FieldError />
                     </TextField>
-
 
                     <div>
                       <Select
@@ -133,8 +131,6 @@ export function EditModal({ car }) {
                       <FieldError />
                     </TextField>
 
-
-                   
                     <div className="md:col-span-2">
                       <Select
                         defaultValue={availability}
@@ -184,11 +180,7 @@ export function EditModal({ car }) {
 
                     {/* Description */}
                     <div className="md:col-span-2">
-                      <TextField
-                        defaultValue={description}
-                        name="description"
-                        
-                      >
+                      <TextField defaultValue={description} name="description">
                         <Label>Description</Label>
                         <TextArea
                           placeholder="Describe the travel experience..."

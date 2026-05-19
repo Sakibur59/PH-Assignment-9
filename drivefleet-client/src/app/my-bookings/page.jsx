@@ -8,10 +8,19 @@ const MyBookingsPage = async () => {
     headers: await headers(),
   });
 
+  const { token } = await auth.api.getToken({
+    headers: await headers(),
+  });
+
   const email = session?.user?.email;
 
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_SERVER_URL}/bookings/${email}`,
+    {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    },
   );
   const bookings = await res.json();
 
@@ -34,27 +43,27 @@ const MyBookingsPage = async () => {
                 width={200}
                 className="w-full sm:w-[200px] h-48 sm:h-[200px] object-cover rounded-md"
               />
-             <div className="flex-1 min-w-0 space-y-2">
-               <div className="space-y-2 ">
-                <h1 className="font-bold text-2xl">{booking.carName}</h1>
+              <div className="flex-1 min-w-0 md:min-w-xl space-y-2">
+                <div className="space-y-2 ">
+                  <h1 className="font-bold text-2xl">{booking.carName}</h1>
 
-                <p className="text-sm text-gray-500">
-                  Booking Date: 🗓️
-                  {new Date(booking.bookingDate).toLocaleString()}
-                </p>
+                  <p className="text-sm text-gray-500">
+                    Booking Date: 🗓️
+                    {new Date(booking.bookingDate).toLocaleString()}
+                  </p>
 
-                <p>Booking Id: {booking._id}</p>
-                <p>Driver Need: {booking.driverNeeded.toUpperCase()}</p>
+                  <p>Booking Id: {booking._id}</p>
+                  <p>Driver Need: {booking.driverNeeded.toUpperCase()}</p>
 
-                <p className="text-xl font-bold text-cyan-500">
-                  Price: ${booking.pricePerDay}/Day
-                </p>
+                  <p className="text-xl font-bold text-cyan-500">
+                    Price: ${booking.pricePerDay}/Day
+                  </p>
 
-                <div className="mt-3 sm:mx-auto">
-                  <BookingCancelAlert bookingId={booking._id} />
+                  <div className="mt-3 sm:mx-auto">
+                    <BookingCancelAlert bookingId={booking._id} />
+                  </div>
                 </div>
               </div>
-             </div>
             </div>
           ))}
         </div>

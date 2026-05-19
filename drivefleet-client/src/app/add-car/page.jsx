@@ -1,4 +1,5 @@
 "use client";
+
 import { authClient } from "@/lib/auth-client";
 import {
   Button,
@@ -11,6 +12,7 @@ import {
   ListBox,
   Card,
 } from "@heroui/react";
+
 import { redirect } from "next/navigation";
 
 import React from "react";
@@ -22,6 +24,8 @@ const AddCarPage = () => {
     const formData = new FormData(e.target);
     const carData = Object.fromEntries(formData.entries());
     const { data: sessionData } = await authClient.getSession();
+    const { data: tokenData } = await authClient.token();
+
     console.log("Form Data:", carData);
 
     try {
@@ -29,6 +33,7 @@ const AddCarPage = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          authorization: `Bearer ${tokenData?.token}`,
         },
         body: JSON.stringify({
           ...carData,
@@ -79,20 +84,23 @@ const AddCarPage = () => {
                 </Select.Trigger>
                 <Select.Popover>
                   <ListBox>
-                    <ListBox.Item id="Sedan" textValue="Sedan">
-                      Sedan
-                    </ListBox.Item>
                     <ListBox.Item id="SUV" textValue="SUV">
                       SUV
+                    </ListBox.Item>
+                    <ListBox.Item id="Sedan" textValue="Sedan">
+                      Sedan
+                    </ListBox.Item>                                  
+                    <ListBox.Item id="Truck" textValue="Truck">
+                      Truck
+                    </ListBox.Item>                                  
+                    <ListBox.Item id="Minivan" textValue="Minivan">
+                      Minivan
                     </ListBox.Item>
                     <ListBox.Item id="Hatchback" textValue="Hatchback">
                       Hatchback
                     </ListBox.Item>
-                    <ListBox.Item id="Crossover" textValue="Crossover">
-                      Crossover
-                    </ListBox.Item>
-                    <ListBox.Item id="Luxury" textValue="Luxury">
-                      Luxury
+                    <ListBox.Item id="Van" textValue="Van">
+                      Van
                     </ListBox.Item>
                   </ListBox>
                 </Select.Popover>

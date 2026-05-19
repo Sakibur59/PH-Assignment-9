@@ -5,6 +5,8 @@ import Link from "next/link";
 import logo from "../assets/logo.svg";
 import { authClient } from "@/lib/auth-client";
 import { useState } from "react";
+import toast from "react-hot-toast";
+import { redirect } from "next/navigation";
 
 const Navbar = () => {
   const { data: session } = authClient.useSession();
@@ -13,6 +15,8 @@ const Navbar = () => {
 
   const handleSignOut = async () => {
     await authClient.signOut();
+    toast.success("Logged out successfully");
+    redirect("/");
   };
 
   return (
@@ -107,7 +111,7 @@ const Navbar = () => {
                     <li className="border-t border-gray-100">
                       <button
                         onClick={handleSignOut}
-                        className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50"
+                        className="w-full  px-4 py-2 text-sm text-red-600 hover:bg-red-50"
                       >
                         Logout
                       </button>
