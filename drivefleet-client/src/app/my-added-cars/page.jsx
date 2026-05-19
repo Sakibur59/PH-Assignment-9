@@ -1,4 +1,5 @@
 import { AddCarDeleteAlert } from "@/components/AddCarDeleteModal";
+import { EditModal } from "@/components/EditModal";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import Image from "next/image";
@@ -19,7 +20,13 @@ const MyAddedCarPage = async () => {
       <p className="text-sm text-gray-400 uppercase tracking-widest mb-1">
         Private Layout
       </p>
+      <div className="flex justify-between gap-4">
+
       <h1 className="text-4xl font-black mb-8">My Added Cars</h1>
+       <Link href="/add-car" className="inline-block mb-6 px-6 py-3 bg-cyan-500 text-white rounded-md shadow hover:bg-cyan-600 transition">
+          + Add New Car
+        </Link>
+      </div>
       
 
       {!cars?.length ? (
@@ -35,7 +42,14 @@ const MyAddedCarPage = async () => {
                 width={200}
               />
               <div className="space-y-2">
+                <div className="flex gap-30">
+
                 <h1 className="font-bold text-2xl">{car.carName}</h1>
+                <div className="flex gap-2">
+                <EditModal car={car} />
+                <AddCarDeleteAlert carId={car._id} />
+                </div>
+                </div>
 
                 <p className="text-xl font-bold text-cyan-500">
                   Price: ${car.pricePerDay}/Day
@@ -43,17 +57,16 @@ const MyAddedCarPage = async () => {
                 <p>Brand: {car.brand}</p>
                 <p>Category: {car.category}</p>
                 <p>Availability: {car.availability.toUpperCase()}</p>
+                <p>Car Description: {car.description}</p>
 
-                <AddCarDeleteAlert carId={car._id} />
+                
               </div>
             </div>
           ))}
         </div>
       )}
       <div className="flex justify-end mt-10">
-        <Link href="/add-car" className="inline-block mb-6 px-6 py-3 bg-cyan-500 text-white rounded-md shadow hover:bg-cyan-600 transition">
-          + Add New Car
-        </Link>
+       
       </div>
     </div>
   );
