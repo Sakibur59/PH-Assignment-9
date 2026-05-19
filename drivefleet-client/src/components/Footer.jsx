@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const Footer = () => {
   return (
     <footer className="bg-black text-gray-400 px-6 md:px-16 py-16 mt-10">
@@ -14,12 +16,12 @@ const Footer = () => {
         </div>
           <div className="mt-10 md:mt-0">
             <h3 className="text-white mb-3 tracking-wide">QUICK LINKS</h3>
-            <ul className="space-y-2">
-              <li className="hover:text-white cursor-pointer">Explore Cars</li>
-              <li className="hover:text-white cursor-pointer">Add Car</li>
-              <li className="hover:text-white cursor-pointer">My Bookings</li>
-              <li className="hover:text-white cursor-pointer">Login</li>
-            </ul>
+            <div className="space-y-2 flex flex-col">
+              <Link href="/explore-cars" className="hover:text-white cursor-pointer">Explore Cars</Link>
+              <Link href="/add-car" className="hover:text-white cursor-pointer">Add Car</Link>
+              <Link href="/my-bookings" className="hover:text-white cursor-pointer">My Bookings</Link>
+              <Link href="/login" className="hover:text-white cursor-pointer">Login</Link>
+            </div>
           </div>
          
           <div>

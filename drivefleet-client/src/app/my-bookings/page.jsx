@@ -16,21 +16,26 @@ const MyBookingsPage = async () => {
   const bookings = await res.json();
 
   return (
-    <div className="max-w-7xl mx-auto mb-10  p-5 mt-10">
-      <h1 className="text-3xl font-bold mb-5">My Bookings</h1>
+    <div className="md:max-w-7xl mx-auto mb-10  p-5 mt-10">
+      <h1 className="text-2xl sm:text-3xl font-bold mb-5">My Bookings</h1>
       {!bookings?.length ? (
         <p>You have no bookings yet.</p>
       ) : (
         <div className="space-y-5">
           {bookings.map((booking) => (
-            <div key={booking._id} className="flex gap-5 border p-5 min-w-3xl">
+            <div
+              key={booking._id}
+              className="flex flex-col sm:flex-row gap-4 border rounded-lg p-5"
+            >
               <Image
                 src={booking.imageUrl}
                 alt={booking.carName}
                 height={200}
                 width={200}
+                className="w-full sm:w-[200px] h-48 sm:h-[200px] object-cover rounded-md"
               />
-              <div className="space-y-2">
+             <div className="flex-1 min-w-0 space-y-2">
+               <div className="space-y-2 ">
                 <h1 className="font-bold text-2xl">{booking.carName}</h1>
 
                 <p className="text-sm text-gray-500">
@@ -45,8 +50,11 @@ const MyBookingsPage = async () => {
                   Price: ${booking.pricePerDay}/Day
                 </p>
 
-                <BookingCancelAlert bookingId={booking._id} />
+                <div className="mt-3 sm:mx-auto">
+                  <BookingCancelAlert bookingId={booking._id} />
+                </div>
               </div>
+             </div>
             </div>
           ))}
         </div>

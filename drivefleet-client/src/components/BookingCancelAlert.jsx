@@ -29,15 +29,15 @@ export function BookingCancelAlert({ bookingId}) {
   return (
     <AlertDialog>
       <Button
-        className={" rounded-none border-red-500 text-red-500"}
+        className={" rounded-md border-red-500 text-red-500"}
         variant="outline"
       >
         <TrashBin /> Cancel
       </Button>
 
       <AlertDialog.Backdrop>
-        <AlertDialog.Container>
-          <AlertDialog.Dialog className="sm:max-w-[400px]">
+        <AlertDialog.Container  className="center">
+          <AlertDialog.Dialog className="w-[calc(100%-2rem)] max-w-[400px]">
             <AlertDialog.CloseTrigger />
             <AlertDialog.Header>
               <AlertDialog.Icon status="danger" />

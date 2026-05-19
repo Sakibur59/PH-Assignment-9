@@ -12,9 +12,11 @@ import {
   Select,
   ListBox,
 } from "@heroui/react";
+import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
 export function BookingModal({ car }) {
+  const route = useRouter();
   const { _id, carName, imageUrl, location, pricePerDay } = car;
 
   const onSubmit = async (e) => {
@@ -46,6 +48,7 @@ export function BookingModal({ car }) {
 
     if (res.ok) {
       toast.success("Booking successful! 🎉");
+      route.refresh();
     } else {
       toast.error(data?.message || "Booking failed. Try again."); 
     }

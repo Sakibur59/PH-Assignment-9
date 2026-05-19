@@ -48,7 +48,7 @@ const AddCarPage = () => {
     <div className="p-5 max-w-7xl mx-auto">
       <h1 className="text-3xl font-bold mb-6">Add New Rental Car</h1>
       <Card>
-        <form onSubmit={handleSubmit} className="p-10 space-y-8 w-3xl">
+        <form onSubmit={handleSubmit} className="p-10 space-y-8 w-full">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Car Name */}
             <TextField name="carName" isRequired>

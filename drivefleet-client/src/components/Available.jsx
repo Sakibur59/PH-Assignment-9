@@ -2,15 +2,15 @@ import { Button } from "@heroui/react";
 import Link from "next/link";
 import CarCard from "./CarCard";
 
-const Featured = async () => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/featured`)
+const Available = async () => {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/available`)
     const cars = await res.json()
     console.log(cars)
     return (
         <div className="mt-10 max-w-7xl mx-auto">
         <div className="flex items-center justify-between">
              <div>
-               <h1 className="text-3xl font-bold">Featured Cars</h1>
+               <h1 className="text-3xl font-bold">Available Cars</h1>
             <p className="text-muted">Handpicked car options for your next adventure</p>
          </div>
 
@@ -26,4 +26,4 @@ const Featured = async () => {
     );
 };
 
-export default Featured;
+export default Available;
