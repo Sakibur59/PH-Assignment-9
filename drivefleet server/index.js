@@ -3,6 +3,7 @@ const cors = require("cors");
 
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const dotenv = require("dotenv");
+const { createRemoteJWKSet,jwtVerify } = require("jose-cjs");
 dotenv.config();
 const uri = process.env.MONGO_DB_URI;
 const app = express();
@@ -18,6 +19,29 @@ const client = new MongoClient(uri, {
     deprecationErrors: true,
   },
 });
+
+const JWKS = createRemoteJWKSet(
+  new URL(`${process.env.CLIENT_URL}/api/auth/jwks`),
+);
+
+const verifyToken = async (req, res, next) => {
+  const authHeader = req?.headers.authorization;
+  if (!authHeader) {
+    return res.status(401).send({ message: "Unauthorized" });
+  }
+  const token = authHeader.split(" ")[1];
+  if (!token) {
+    return res.status(401).send({ message: "Unauthorized" });
+  }
+
+  try {
+    const { payload } = await jwtVerify(token, JWKS);
+    console.log("Token payload:", payload);
+    next();
+  } catch (error) {
+    return res.status(401).send({ message: "Unauthorized" });
+  }
+};
 
 async function run() {
   try {
@@ -48,7 +72,7 @@ async function run() {
       }
     });
 
-    app.patch("/cars/:id", async (req, res) => {
+    app.patch("/cars/:id",verifyToken, async (req, res) => {
       const id = req.params.id;
       const updatedData = req.body;
       const result = await carsCollection.updateOne(
@@ -58,7 +82,7 @@ async function run() {
       res.send(result);
     });
 
-    app.post("/bookings", async (req, res) => {
+    app.post("/bookings", verifyToken,async (req, res) => {
       try {
         const bookingData = req.body;
 
@@ -75,17 +99,9 @@ async function run() {
       }
     });
 
-    // app.get("/bookings-count/:carId", async (req, res) => {
-    //   try {
-    //     const { carId } = req.params;
-    //     const count = await bookingsCollection.countDocuments({ carId });
-    //     res.json({ count });
-    //   } catch (error) {
-    //     res.status(500).json({ message: error.message });
-    //   }
-    // });
+   
 
-    app.get("/bookings/:email", async (req, res) => {
+    app.get("/bookings/:email", verifyToken,async (req, res) => {
       const { email } = req.params;
       const bookings = await bookingsCollection
         .find({ userEmail: email })
@@ -93,7 +109,7 @@ async function run() {
       res.json(bookings);
     });
 
-    app.get("/my-added-cars/:email", async (req, res) => {
+    app.get("/my-added-cars/:email",verifyToken, async (req, res) => {
       try {
         const { email } = req.params;
         const result = await carsCollection
@@ -105,7 +121,7 @@ async function run() {
       }
     });
 
-    app.get("/cars/:id", async (req, res) => {
+    app.get("/cars/:id",async (req, res) => {
       const id = req.params.id;
       const result = await carsCollection.findOne({
         _id: new ObjectId(id),
@@ -113,7 +129,7 @@ async function run() {
       res.send(result);
     });
 
-    app.post("/cars", async (req, res) => {
+    app.post("/cars",verifyToken, async (req, res) => {
       try {
         const carData = req.body;
 
@@ -133,7 +149,7 @@ async function run() {
       res.send(result);
     });
 
-    app.delete("/bookings/:id", async (req, res) => {
+    app.delete("/bookings/:id",verifyToken, async (req, res) => {
       try {
         const { id } = req.params;
 
@@ -167,7 +183,7 @@ async function run() {
         });
       }
     });
-    app.delete("/my-added-cars/:carId", async (req, res) => {
+    app.delete("/my-added-cars/:carId",verifyToken, async (req, res) => {
       try {
         const { carId } = req.params;
         const result = await carsCollection.deleteOne({
