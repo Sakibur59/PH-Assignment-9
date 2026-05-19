@@ -59,6 +59,14 @@ async function run() {
       }
     });
 
+    app.get("/bookings/:email", async (req, res) => {
+      const { email } = req.params;
+      const bookings = await bookingsCollection
+        .find({ userEmail: email })
+        .toArray();
+      res.json(bookings);
+    });
+
     app.get("/cars/:id", async (req, res) => {
       const id = req.params.id;
       const result = await carsCollection.findOne({
@@ -78,6 +86,16 @@ async function run() {
       const result = await carsCollection.find().limit(6).toArray();
       res.send(result);
     });
+
+   app.delete('/bookings/:bookingId', async (req, res) => {
+  try {
+    const { bookingId } = req.params;
+    const result = await bookingsCollection.deleteOne({ _id: new ObjectId(bookingId) });
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 
     await client.db("admin").command({ ping: 1 });
     console.log(
