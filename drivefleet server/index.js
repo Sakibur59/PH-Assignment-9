@@ -11,7 +11,6 @@ const PORT = process.env.PORT;
 app.use(cors());
 app.use(express.json());
 
-
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
@@ -26,6 +25,7 @@ async function run() {
 
     const db = client.db("drivefleetDB");
     const carsCollection = db.collection("cars");
+    const bookingsCollection = db.collection("bookings");
 
     app.get("/cars", async (req, res) => {
       try {
@@ -48,7 +48,18 @@ async function run() {
       }
     });
 
-    app.get("/cars/:id",async (req, res) => {
+    app.post("/bookings", async (req, res) => {
+      try {
+        const bookingData = req.body;
+        bookingData.bookingDate = new Date();
+        const result = await bookingsCollection.insertOne(bookingData);
+        res.json(result);
+      } catch (error) {
+        res.status(500).json({ message: error.message });
+      }
+    });
+
+    app.get("/cars/:id", async (req, res) => {
       const id = req.params.id;
       const result = await carsCollection.findOne({
         _id: new ObjectId(id),
