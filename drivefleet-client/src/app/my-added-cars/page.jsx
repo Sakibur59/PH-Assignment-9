@@ -5,6 +5,11 @@ import { headers } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
 
+export const metadata = {
+  title: "My Added Cars - DriveFleet",
+  description: "Manage your added cars with DriveFleet. View, edit, and delete your vehicle listings at any time. Keep your inventory up-to-date and ensure your cars are available for rental.",
+};
+
 const MyAddedCarPage = async () => {
   const session = await auth.api.getSession({ headers: await headers() });
   const email = session?.user?.email;

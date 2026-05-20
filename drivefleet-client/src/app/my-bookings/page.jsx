@@ -3,6 +3,12 @@ import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import Image from "next/image";
 
+
+export const metadata = {
+  title: "My Bookings - DriveFleet",
+  description: "View and manage your car rental bookings with DriveFleet. Check your booking history, see details of each reservation, and easily cancel if your plans change. Stay organized and in control of your rentals with our user-friendly booking management system.",
+};
+
 const MyBookingsPage = async () => {
   const session = await auth.api.getSession({
     headers: await headers(),
