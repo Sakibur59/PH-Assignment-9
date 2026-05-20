@@ -91,24 +91,29 @@ export function EditModal({ car }) {
                         </Select.Trigger>
                         <Select.Popover>
                           <ListBox>
-                            <ListBox.Item id="Sudan" textValue="Sudan">
-                              Sudan
+                            <ListBox.Item id="Sedan" textValue="Sedan">
+                              Sedan
                               <ListBox.ItemIndicator />
                             </ListBox.Item>
                             <ListBox.Item id="SUV" textValue="SUV">
                               SUV
                               <ListBox.ItemIndicator />
                             </ListBox.Item>
+                            <ListBox.Item id="Truck" textValue="Truck">
+                              Truck
+                              <ListBox.ItemIndicator />
+                            </ListBox.Item>
+                            <ListBox.Item id="Minivan" textValue="Minivan">
+                              Minivan
+                              <ListBox.ItemIndicator />
+                            </ListBox.Item>
                             <ListBox.Item id="Hatchback" textValue="Hatchback">
                               Hatchback
                               <ListBox.ItemIndicator />
                             </ListBox.Item>
-                            <ListBox.Item id="Crossover" textValue="Crossover">
-                              Crossover
-                              <ListBox.ItemIndicator />
-                            </ListBox.Item>
-                            <ListBox.Item id="Luxury" textValue="Luxury">
-                              Luxury
+                           
+                            <ListBox.Item id="Van" textValue="Van">
+                              Van
                               <ListBox.ItemIndicator />
                             </ListBox.Item>
                           </ListBox>
