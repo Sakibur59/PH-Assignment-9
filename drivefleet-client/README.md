@@ -2,7 +2,7 @@
 
 ![DriveFleet Banner](https://github.com/user-attachments/assets/224fe59e-84b7-40a7-8403-ba47ac7772f6)
 
-**Live Site:** [****](******)
+**Live Site:** [DriveFleet Car Rental Platform](https://drivefleet-client-ten.vercel.app/)
 
 DriveFleet is a modern, full-stack car rental platform where users can browse, book, and manage car rentals with ease. Built with Next.js, Express.js, and MongoDB.
 

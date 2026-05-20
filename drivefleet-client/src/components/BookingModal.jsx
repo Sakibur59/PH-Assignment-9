@@ -41,7 +41,7 @@ export function BookingModal({ car }) {
         location,
         pricePerDay,
         userEmail: sessionData?.user?.email,
-        bookingDate: new Date(),
+        bookingDate: new Date().toLocaleString(),
       }),
     });
 
