@@ -82,6 +82,8 @@ async function run() {
       res.send(result);
     });
 
+    app.get('/health', (req, res) => res.send('OK'))
+
     app.post("/bookings", verifyToken,async (req, res) => {
       try {
         const bookingData = req.body;
